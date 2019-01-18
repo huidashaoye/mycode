@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.itheima.dao.AccountDao">
+
+   <!-- <resultMap id="accountUser" type="com.itheima.domain.Account"  >
+         <id property="id"  column="aid"/>
+        <result property="uid"  column="uid"/>
+        <result property="money" column="money"/>
+        <association property="user" column="uid" javaType="com.itheima.domain.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="birthday" column="birthday"/>
+            <result property="sex" column="sex"/>
+            <result property="address" column="address"/>
+        </association>
+
+    </resultMap>
+-->
+
+   <!-- <resultMap id="userMap" type="com.itheima.domain.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <collection property="account" ofType="com.itheima.domain.Account">
+            <id property="id" column="aid"/>
+            <result property="uid" column="uid"/>
+            <result property="money" column="money"/>
+        </collection>
+
+    </resultMap>-->
+
+   <!-- <resultMap id="userRole" type="com.itheima.domain.Role">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="role_desc" property="roleDesc"/>
+        <collection property="user" ofType="com.itheima.domain.User">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="birthday" column="birthday"/>
+            <result property="sex" column="sex"/>
+            <result property="address" column="address"/>
+        </collection>
+
+    </resultMap>-->
+
+    <resultMap id="userRole" type="com.itheima.domain.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="address" column="address"/>
+        <collection property="roles" ofType="com.itheima.domain.Role">
+            <id property="id" column="rid"/>
+            <result property="roleName" column="role_name"/>
+            <result property="roleDesc" column="role_desc"/>
+        </collection>
+
+    </resultMap>
+        <select id="findAll" resultMap="userRole">
+select
+u.`id`,
+u.`username`,
+u.`birthday`,
+u.`sex`,
+u.`address`,
+r.`ID` as rid,
+r.`ROLE_DESC`,
+r.`ROLE_NAME`
+from user u left outer join user_role  ur on u.`id`=ur.`UID`
+ left outer join role r on ur.`RID`=r.`ID`
+
+        </select>
+
+
+</mapper>
